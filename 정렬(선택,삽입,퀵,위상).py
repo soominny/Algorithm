@@ -63,3 +63,40 @@ for i in range(len(array)):
 for i in range(len(count)):
     for j in range(count[i]):
         print(i, end=' ')
+
+
+# 위상정렬
+v=7
+e=8
+from collections import deque
+
+indegree = [0] *(v+1)
+graph= [ [] for i in range(v+1)]
+
+for _ in range(e):
+    a,b=map(int,input().split())
+    graph[a].append(b)
+    indegree[b] += 1
+
+
+def topology_sort():
+    result=[]
+    q=deque()
+
+    for i in range(1,v+1):
+        if indegree[i]==0:
+            q.append(i)
+
+    while q:
+        node = q.popleft()
+        result.append(node)
+
+        for i in graph[node]:
+            indegree[i]-=1
+
+            if indegree[i]==0:
+                q.append(i)
+
+    print(result)
+
+topology_sort()
